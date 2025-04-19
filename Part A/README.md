@@ -1,5 +1,5 @@
 # CNN Classifier with W&B Hyperparameter Tuning  
-Assignment File: `MA23M026_A2_PartA.ipynb`
+Assignment Notebook: `MA23M026_A2_PartA.ipynb`
 
 Hi This is my notebook where I’ve built a custom Convolutional Neural Network CNN using PyTorch. I also connected it with Weights and Biases W&B to do a Bayesian hyperparameter sweep. The whole thing is super modular and easy to experiment with.
 
@@ -89,16 +89,22 @@ You just run it once, and W&B will take care of training multiple models with di
 
 1. Make sure W&B is installed:
    
-   ```pip install wandb```
+   ```
+   pip install wandb
+   ```
 
 
 3. Login to W&B once:
    
-   ```wandb login```
+   ```
+   wandb login
+   ```
 
 5. Place your dataset at:
 
-   ```/kaggle/input/inaturalist-dataset/inaturalist_12K/train/```
+   ```
+   /kaggle/input/inaturalist-dataset/inaturalist_12K/train/
+   ```
 
 7. Run the sweep:
 
@@ -135,4 +141,3 @@ Modular Code | Easy to reuse and modify
 - Everything is modular – so you can tweak it for your own datasets easily.
 - Great for learning how CNNs and W&B sweeps work together.
 
-Let me know if you want this in PDF or markdown file or if you'd like help writing Part B of your assignment too
