@@ -1,5 +1,5 @@
 # CNN Classifier with W&B Hyperparameter Tuning  
-Assignment Notebook: `MA23M026_A2_PartA.ipynb`
+### Assignment Notebook: `MA23M026_A2_PartA.ipynb`
 
 Hi This is my notebook where I’ve built a custom Convolutional Neural Network CNN using PyTorch. I also connected it with Weights and Biases W&B to do a Bayesian hyperparameter sweep. The whole thing is super modular and easy to experiment with.
 
