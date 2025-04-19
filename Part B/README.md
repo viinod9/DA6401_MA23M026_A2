@@ -55,7 +55,7 @@ ma23m026_a2_partb.py
 This Python script includes all the classes and functions related to the Fine-tuning pre-trained model (ResNet-50) with further hyperparameter tuning. You can import this file into any other script or notebook by keeping it in the same directory.
 
 ```
-trainB.ipy
+trainB.py
 ```
 
 This is the main training script. You can train a sample Fine-tuning pre-trained model (ResNet-50) using command-line arguments. See the "How to Run" section below for detailed instructions.
