@@ -1,104 +1,123 @@
-CNN Classifier with W and B Hyperparameter Tuning  
-Project File MA23M026_A2_PartA.ipynb
+# CNN Classifier with W&B Hyperparameter Tuning  
+Project File: MA23M026_A2_PartA.ipynb
 
-This project builds a custom Convolutional Neural Network CNN using PyTorch and integrates it with Weights and Biases W and B for automatic hyperparameter tuning using Bayesian search. The code is tested with the iNaturalist 12K dataset but it can be used with any image dataset having a similar folder structure.
+Hi This is my notebook where I’ve built a custom Convolutional Neural Network CNN using PyTorch. I also connected it with Weights and Biases W&B to do a Bayesian hyperparameter sweep. The whole thing is super modular and easy to experiment with.
 
-Dataset Format
+This project is mainly designed to work with the iNaturalist 12K image classification dataset, but you can use any dataset with a similar folder structure.
 
-Make sure your dataset directory is structured like this
+## Dataset Format
 
-your_dataset_directory
-  train
-    class1
-    class2
-    class3
-    ...
+Make sure your dataset directory looks like this:
 
-The images should be inside class folders under the train directory. The code will automatically split the data into training and validation sets.
+/inaturalist_12K/  
+train/  
+class1/  
+class2/  
+...
 
-Code Explanation
+The model reads images from the train folder and automatically splits it into training and validation sets while maintaining class balance.
 
-1. CNN Model - Cutomized_CNN class
+## Code Breakdown
 
-This is a flexible CNN model built using torch.nn.Module. It lets you customize
+### 1. CNN Model Cutomized_CNN class
+This is where I built a flexible CNN using torch.nn.Module. You can control almost everything:
 
-- Number of filters in convolutional layers
+- Number of convolutional filters per layer
 - Kernel sizes
-- Activation function relu gelu silu mish
-- Dropout value
-- Use of batch normalization
-- Dense layer size
+- Activation function ReLU GELU SiLU Mish
+- Dropout helps avoid overfitting
+- Batch normalization optional
+- Dense fully connected layer size
 - Number of output classes
 
-It builds five convolutional blocks dynamically followed by a fully connected layer and an output layer.
+The model builds multiple convolutional layers dynamically using ModuleList, and then adds two fully connected layers at the end.
 
-2. Activation Function Mapper
+The forward pass is defined in forward_pass which  
+1. Applies conv activation pooling layers.  
+2. Flattens the result.  
+3. Passes through dense layer and final output layer.
 
-The code includes a dictionary activation_map that lets you use activation function names as strings. The function get_activation_function returns the actual function for use in the model.
+### 2. Activation Function Mapper
+There’s a dictionary called activation_map that maps string names like "gelu" or "mish" to actual PyTorch activation functions. This makes it super easy to plug them into the model dynamically.
 
-3. Data Loading and Splitting - get_dataloaders function
+You can pass activation names in the W&B config and it automatically applies them.
 
-This function loads images using torchvision.datasets.ImageFolder. It performs stratified splitting of the data to ensure balanced class distribution. If augmentation is enabled it adds random horizontal flips and slight rotations to the training images. It returns DataLoaders for both train and validation sets.
+### 3. Data Loading and Splitting get_dataloaders
+This function:
 
-4. Training and Evaluation
+- Loads image data using ImageFolder
+- Applies image resizing and optional data augmentation
+- Splits data into train and validation sets using stratified sampling keeps class balance
+- Returns PyTorch DataLoaders for training and validation
 
-train_epoch runs one epoch of training and calculates the average loss and accuracy.
+If augmentation is on, it adds random flips and rotations to help improve generalization.
 
-evaluate runs evaluation on the validation set and returns the average loss and accuracy. It does not calculate gradients.
+### 4. Training and Evaluation
+There are two helper functions:
 
-5. W and B Sweep Training - train function
+- train_epoch runs one training loop over the data, computes loss and accuracy.
+- evaluate runs one pass over validation data without gradient updates.
 
-This function is used for W and B sweeps. It builds the CNN using parameters from the current W and B config and trains the model for a number of epochs. It logs training and validation accuracy and loss to the W and B dashboard.
+Both give easy-to-read outputs like train and validation loss and accuracy for each epoch.
 
-The model can dynamically adjust based on the sweep parameters like
+### 5. Training with W&B Sweeps train function
+This is where the real magic happens. Inside the train function:
 
-- base_filter number of filters
-- filter_organization same double half
-- activation_fn relu gelu silu mish
-- data_augmentation true or false
-- batch_norm true or false
-- dropout rate
-- dense_neurons number of dense units
-- batch_size
-- learning rate
-- number of epochs
+- W&B picks hyperparameters from the sweep config.
+- It builds the CNN using the selected values.
+- Trains and validates the model for N epochs.
+- Logs everything loss accuracy learning rate etc. to your W&B dashboard.
 
-6. W and B Sweep Config
+Here’s what gets auto-tuned:
 
-A sweep_config dictionary is defined that uses Bayesian optimization to maximize validation accuracy. W and B tries different combinations of parameters and selects the best.
+- Base number of filters 32 or 64
+- Filter organization same double or half
+- Activation function GELU SiLU Mish
+- Whether to use BatchNorm
+- Dropout rate
+- Size of the dense FC layer
+- Batch size
+- Learning rate
+- Number of epochs
 
-How to Run
+### 6. W&B Sweep Config
+Here I’ve defined a Bayesian sweep config, which finds the best hyperparameter combination over time.
 
-1. Install dependencies
-pip install torch torchvision matplotlib wandb
+You just run it once, and W&B will take care of training multiple models with different settings and keep track of everything
 
-2. Login to W and B once
-wandb login
+## How to Run
 
-3. Make sure your dataset is available at
-kaggle input inaturalist dataset inaturalist_12K train
+1. Make sure W&B is installed:
+   pip install wandb
 
-4. Run the sweep from the notebook
-sweep_id = wandb.sweep(sweep_config, project='iNaturalist-CNN-PartA-BayesianSearch')
-wandb.agent(sweep_id, function=train, count=10)
+2. Login to W&B once:
+   wandb login
 
-This will run 10 experiments with different parameter combinations automatically and log everything to your W and B dashboard.
+3. Place your dataset at:
+   /kaggle/input/inaturalist-dataset/inaturalist_12K/train/
 
-Summary of Features
+4. Run the sweep:
+   sweep_id = wandb.sweep(sweep_config, project='iNaturalist-CNN-PartA-BayesianSearch')  
+   wandb.agent(sweep_id, function=train, count=10)
 
-Custom CNN with configurable layers and activation functions  
-Stratified train and validation split  
-Optional data augmentation  
-Full W and B integration with sweep support  
-Modular code with reusable components  
-CrossEntropyLoss and Adam optimizer used  
+This will run 10 training jobs with different hyperparameter values and log all metrics to W&B.
 
-Extra Notes
+## Summary of Features
 
-All images are resized to 224 by 224  
-You can easily modify the dataset path or hyperparameters  
-Code supports GPU acceleration if available  
-Each training run is tracked with a unique name using the hyperparameters  
+Feature | Description  
+--------|-------------  
+Custom CNN | Built from scratch, super configurable  
+Stratified Data Split | Maintains label balance in train and validation  
+Data Augmentation | Optional, adds robustness  
+W&B Integration | Logs everything, plus hyperparameter search  
+Multiple Activation Support | Use ReLU GELU SiLU Mish  
+Modular Code | Easy to reuse and modify
 
-This code is useful for experimenting with CNNs and learning how to use W and B for managing experiments and hyperparameter tuning
+## Extra Notes
 
+- The image size is fixed to 224x224 – common for pre-trained models too.
+- Model uses CrossEntropyLoss and Adam optimizer.
+- Everything is modular – so you can tweak it for your own datasets easily.
+- Great for learning how CNNs and W&B sweeps work together.
+
+Let me know if you want this in PDF or markdown file or if you'd like help writing Part B of your assignment too
