@@ -9,11 +9,13 @@ This project is mainly designed to work with the iNaturalist 12K image classific
 
 Make sure your dataset directory looks like this:
 
-/inaturalist_12K/  
-train/  
-class1/  
+```
+/inaturalist_12K/
+train/
+class1/
 class2/  
 ...
+```
 
 The model reads images from the train folder and automatically splits it into training and validation sets while maintaining class balance.
 
