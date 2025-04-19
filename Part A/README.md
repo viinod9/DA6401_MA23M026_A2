@@ -88,17 +88,24 @@ You just run it once, and W&B will take care of training multiple models with di
 ## How to Run
 
 1. Make sure W&B is installed:
+   
    ```pip install wandb```
 
-2. Login to W&B once:
+
+3. Login to W&B once:
+   
    ```wandb login```
 
-3. Place your dataset at:
+5. Place your dataset at:
+
    ```/kaggle/input/inaturalist-dataset/inaturalist_12K/train/```
 
-4. Run the sweep:
-   ```sweep_id = wandb.sweep(sweep_config, project='iNaturalist-CNN-PartA-BayesianSearch')  
-   wandb.agent(sweep_id, function=train, count=10)```
+7. Run the sweep:
+
+   ```
+   sweep_id = wandb.sweep(sweep_config, project='iNaturalist-CNN-PartA-BayesianSearch')  
+   wandb.agent(sweep_id, function=train, count=10)
+   ```
 
 This will run 10 training jobs with different hyperparameter values and log all metrics to W&B.
 
