@@ -105,12 +105,12 @@ You just run it once, and W&B will take care of training multiple models with di
 
    ```
    inaturalist_12K/
-├── train/
-│   ├── class_1/
-│   │   ├── img1.jpg
-│   │   └── ...
-│   ├── class_2/
-│   └── ...
+   ├── train/
+   │   ├── class_1/
+   │   │   ├── img1.jpg
+   │   │   └── ...
+   │   ├── class_2/
+   │   └── ...
 
    ```
 
