@@ -40,9 +40,6 @@ pip install torch torchvision scikit-learn matplotlib wandb
 
 ---
 
-write one section like this also
-
-
 ### 7. About Files
 
 ```
@@ -65,7 +62,60 @@ This is the main training script. You can train a sample Fine-tuning pre-trained
 
 ---
 
-## How to Run
+
+## How to Run `trainB.py` (CLI)
+
+1. Make sure W&B is installed:
+   
+   ```
+   pip install torch torchvision scikit-learn matplotlib wandb
+
+   ```
+
+2. Login to W&B once:
+   
+   ```
+   wandb login "YOUR_WANDB_API_KEY"
+
+   ```
+
+3. Dataset Structure:
+   Prepare your image dataset in the following format (standard for torchvision.datasets.ImageFolder)
+
+   ```
+   inaturalist_12K/
+   ├── train/
+   │   ├── class_1/
+   │   │   ├── img1.jpg
+   │   │   └── ...
+   │   ├── class_2/
+   │   └── ...
+
+   ```
+
+5. Command-Line Usage
+
+```
+python trainB.py \
+  --data_dir /path/to/inaturalist_12K
+```
+**OR**
+```
+
+python trainB.py \
+  --data_path /path/to/your/dataset \
+  --wandb_key your_wandb_api_key \
+  --architecture resnet \
+  --freeze_ratio 0.8 \
+  --epochs 10 \
+  --learning_rate 0.001 \
+  --augment
+
+```
+
+
+
+## How to Run `ma23m026_a2_partb.ipynb`
 
 ### Step 1: Download the Dataset
 
@@ -106,22 +156,6 @@ The WandB sweep explores the following combinations:
 - `augment`: True, False
 
 Each sweep run uses a unique combination of these to optimize validation accuracy.
-
----
-
-## Output
-
-- **WandB Logs**:
-  - Train/validation accuracy & loss per epoch
-  - Sweep dashboard to compare runs
-
-- **Saved Accuracy Plot**:
-  ```
-  arch-<architecture>_freeze-<freeze_ratio>_ep-<epochs>.png
-  ```
-
-Example:  
-`arch-resnet_freeze-0.8_ep-10.png`
 
 ---
 
