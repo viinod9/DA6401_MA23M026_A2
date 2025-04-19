@@ -44,7 +44,7 @@ pip install torch torchvision scikit-learn matplotlib wandb
 
 ### Step 1: Download the Dataset
 
-Download the [iNaturalist 12K dataset](https://www.kaggle.com/datasets/avanwyk/inaturalist12) and ensure it is placed at:
+Download the [iNaturalist 12K dataset](https://www.kaggle.com/datasets/viinod9/inaturalist-dataset) and ensure it is placed at:
 
 ```bash
 /kaggle/input/inaturalist-dataset/inaturalist_12K/train
