@@ -9,7 +9,7 @@ The model reads images from the train folder and automatically splits it into tr
 
 ## Code Breakdown
 
-### 1. CNN Model Cutomized_CNN class
+### CNN Model Cutomized_CNN class
 This is where I built a flexible CNN using torch.nn.Module. You can control almost everything:
 
 - Number of convolutional filters per layer
@@ -27,12 +27,12 @@ The forward pass is defined in forward_pass which
 2. Flattens the result.  
 3. Passes through dense layer and final output layer.
 
-### 2. Activation Function Mapper
+### Activation Function Mapper
 There’s a dictionary called activation_map that maps string names like "gelu" or "mish" to actual PyTorch activation functions. This makes it super easy to plug them into the model dynamically.
 
 You can pass activation names in the W&B config and it automatically applies them.
 
-### 3. Data Loading and Splitting get_dataloaders
+### Data Loading and Splitting get_dataloaders
 This function:
 
 - Loads image data using ImageFolder
@@ -42,7 +42,7 @@ This function:
 
 If augmentation is on, it adds random flips and rotations to help improve generalization.
 
-### 4. Training and Evaluation
+### Training and Evaluation
 There are two helper functions:
 
 - train_epoch runs one training loop over the data, computes loss and accuracy.
@@ -50,7 +50,7 @@ There are two helper functions:
 
 Both give easy-to-read outputs like train and validation loss and accuracy for each epoch.
 
-### 5. Training with W&B Sweeps train function
+### Training with W&B Sweeps train function
 This is where the real magic happens. Inside the train function:
 
 - W&B picks hyperparameters from the sweep config.
@@ -70,12 +70,12 @@ Here’s what gets auto-tuned:
 - Learning rate
 - Number of epochs
 
-### 6. W&B Sweep Config
+### W&B Sweep Config
 Here I’ve defined a Bayesian sweep config, which finds the best hyperparameter combination over time.
 
 You just run it once, and W&B will take care of training multiple models with different settings and keep track of everything
 
-### 7. About Files
+### About Files
 
 ```
 MA23M026_A2_PartA.ipynb
