@@ -22,6 +22,7 @@ class Cutomized_CNN(nn.Module):
 
         self.conv_layers = nn.ModuleList()
         in_channels = input_channels
+        # Build convolutional blocks
         for out_channels, kernel_size in zip(conv_filters, kernel_sizes):
             layers = [nn.Conv2d(in_channels, out_channels, kernel_size=kernel_size, padding=1)]
             if batch_norm:
@@ -30,14 +31,20 @@ class Cutomized_CNN(nn.Module):
             self.conv_layers.append(nn.Sequential(*layers))
             in_channels = out_channels
 
+        # Create dummy input to determine the flatten size for the fully connected layers
         self._dummy_input = torch.zeros(1, input_channels, 224, 224)
         self.flattened_size = self._get_flattening_size()
+
+        # First fully connected layer with optional dropout
         fc1_layers = [nn.Dropout(dropout)] if dropout > 0 else []
         fc1_layers.append(nn.Linear(self.flattened_size, dense_neurons))
         self.fc1 = nn.Sequential(*fc1_layers)
+
+        # Final output layer
         self.fc2 = nn.Linear(dense_neurons, num_classes)
 
     def _get_flattening_size(self):
+        # Forward dummy input through conv layers to determine flattened size
         x = self._dummy_input
         for block in self.conv_layers:
             for layer in block:
@@ -45,12 +52,13 @@ class Cutomized_CNN(nn.Module):
         return x.view(1, -1).size(1)
 
     def forward(self, x):
+        # Pass input through convolutional layers with activation
         for block in self.conv_layers:
             for layer in block:
                 x = layer(x) if not isinstance(layer, nn.Conv2d) else self.activation_fn(layer(x))
-        x = x.view(x.size(0), -1)
-        x = self.dense_activation_fn(self.fc1(x))
-        return self.fc2(x)
+        x = x.view(x.size(0), -1)  # Flatten
+        x = self.dense_activation_fn(self.fc1(x))  # Dense layer with activation
+        return self.fc2(x)  # Final output
 
 # Activation Function Map
 activation_map = {
@@ -62,6 +70,7 @@ activation_map = {
 
 # DataLoader Function
 def get_dataloaders(data_dir, batch_size, val_split=0.2, augment=False):
+    # Define transforms for training and validation sets
     transform_train = transforms.Compose([
         transforms.Resize((224, 224)),
         transforms.RandomHorizontalFlip(),
@@ -76,7 +85,10 @@ def get_dataloaders(data_dir, batch_size, val_split=0.2, augment=False):
         transforms.ToTensor()
     ])
 
+    # Load full training dataset
     full_dataset = ImageFolder(os.path.join(data_dir, 'train'), transform=transform_train)
+
+    # Split dataset class-wise for balanced train-validation split
     label_to_indices = {}
     for idx, (_, label) in enumerate(full_dataset.samples):
         label_to_indices.setdefault(label, []).append(idx)
@@ -88,12 +100,13 @@ def get_dataloaders(data_dir, batch_size, val_split=0.2, augment=False):
         val_idx.extend(indices[:split])
         train_idx.extend(indices[split:])
 
+    # Create subsets for training and validation
     train_data = Subset(full_dataset, train_idx)
     val_data = Subset(ImageFolder(os.path.join(data_dir, 'train'), transform=transform_val), val_idx)
 
     return DataLoader(train_data, batch_size=batch_size, shuffle=True, num_workers=2), \
            DataLoader(val_data, batch_size=batch_size, shuffle=False, num_workers=2), \
-           len(full_dataset.classes)
+           len(full_dataset.classes)  # Return number of classes
 
 # Training Loop
 def train_epoch(model, optimizer, criterion, dataloader, device):
@@ -128,19 +141,22 @@ def evaluate(model, criterion, dataloader, device):
 
 # CLI Entry Point
 def main(args):
-    wandb.login(key=args.wandb_key)
-    wandb.init(project=args.project_name, config=vars(args))
-    device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
+    wandb.login(key=args.wandb_key)  # Login to WandB
+    wandb.init(project=args.project_name, config=vars(args))  # Initialize WandB run
+    device = torch.device("cuda" if torch.cuda.is_available() else "cpu")  # Use GPU if available
 
+    # Define filter size strategy
     filter_map = {
         'same': [args.base_filter]*5,
         'double': [args.base_filter*(2**i) for i in range(5)],
         'half': [max(1, args.base_filter//(2**i)) for i in range(5)]
     }
 
+    # Load train and validation dataloaders
     train_loader, val_loader, num_classes = get_dataloaders(
         args.data_dir, args.batch_size, val_split=0.2, augment=args.augment)
 
+    # Instantiate the model
     model = Cutomized_CNN(
         input_channels=3,
         conv_filters=filter_map[args.filter_organization],
@@ -153,9 +169,11 @@ def main(args):
         num_classes=num_classes
     ).to(device)
 
+    # Define optimizer and loss function
     optimizer = optim.Adam(model.parameters(), lr=args.lr)
     criterion = nn.CrossEntropyLoss()
 
+    # Training loop
     for epoch in range(args.epochs):
         train_loss, train_acc = train_epoch(model, optimizer, criterion, train_loader, device)
         val_loss, val_acc = evaluate(model, criterion, val_loader, device)
@@ -166,6 +184,7 @@ def main(args):
             "val_loss": val_loss, "val_accuracy": val_acc
         })
 
+    # Save the trained model
     torch.save(model.state_dict(), args.model_path)
     print(f"Model saved to {args.model_path}")
 
@@ -173,6 +192,7 @@ def main(args):
 if __name__ == "__main__":
     parser = argparse.ArgumentParser(description="Train Custom CNN with CLI")
 
+    # Define CLI arguments
     parser.add_argument('--data_dir', type=str, required=True, help='Path to dataset directory')
     parser.add_argument('--model_path', type=str, default='model.pth', help='Path to save the trained model')
     parser.add_argument('--wandb_key', type=str, required=True, help='Your wandb API key')
