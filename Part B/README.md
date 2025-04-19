@@ -34,47 +34,78 @@ This notebook (`ma23m026_a2_partb.ipynb`) implements a **transfer learning** pip
 
 Make sure you have the following Python packages installed:
 
-```
+```bash
 pip install torch torchvision scikit-learn matplotlib wandb
-
 ```
-## 🚀 How to Run
+
+---
+
+## How to Run
 
 ### Step 1: Download the Dataset
 
-Download the ```https://www.kaggle.com/datasets/viinod9/inaturalist-dataset```  and ensure it is placed at:
+Download the [iNaturalist 12K dataset](https://www.kaggle.com/datasets/avanwyk/inaturalist12) and ensure it is placed at:
 
-```
+```bash
 /kaggle/input/inaturalist-dataset/inaturalist_12K/train
-
 ```
 
 ### Step 2: Configure WandB
+
 Replace the following line in the notebook:
 
+```python
 wandb.login(key="YOUR_WANDB_API_KEY")
-With your actual WandB API key 
+```
+
+With your actual WandB API key (from https://wandb.ai/authorize).
 
 ### Step 3: Run the Notebook
-Open the notebook and run all cells. It will:
-Initialize a WandB sweep
 
-### Sweep Search Space
+Open the notebook and run all cells. It will:
+
+- Initialize a WandB sweep
+- Run 10 experiments with varying hyperparameters
+- Log metrics and save a plot for each run
+
+---
+
+## Sweep Search Space
+
 The WandB sweep explores the following combinations:
 
-```
-
-epochs: 10, 15, 20
-
-freeze_ratio: 0.8
-
-architecture: resnet
-
-learning_rate: 0.001, 0.0001, 0.01
-
-augment: True, False
-
-```
+- `epochs`: 10, 15, 20  
+- `freeze_ratio`: 0.8  
+- `architecture`: resnet  
+- `learning_rate`: 0.001, 0.0001, 0.01  
+- `augment`: True, False
 
 Each sweep run uses a unique combination of these to optimize validation accuracy.
+
+---
+
+## Output
+
+- **WandB Logs**:
+  - Train/validation accuracy & loss per epoch
+  - Sweep dashboard to compare runs
+
+- **Saved Accuracy Plot**:
+  ```
+  arch-<architecture>_freeze-<freeze_ratio>_ep-<epochs>.png
+  ```
+
+Example:  
+`arch-resnet_freeze-0.8_ep-10.png`
+
+---
+
+## Notes
+
+- Assumes 10 output classes. Modify `model.fc = nn.Linear(..., 10)` if needed.
+- All images resized to 224×224
+- Only `resnet` architecture is used in sweep config, but Inception is supported manually
+
+---
+
 
