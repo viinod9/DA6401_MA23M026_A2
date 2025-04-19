@@ -1,4 +1,4 @@
-# 📘 ma23m026_a2_partb.ipynb
+# ma23m026_a2_partb.ipynb
 
 ## Fine-tuning pre-trained model (ResNet-50)
 
@@ -40,3 +40,43 @@ Make sure you have the following Python packages installed:
 pip install torch torchvision scikit-learn matplotlib wandb
 
 ```
+## 🚀 How to Run
+
+### Step 1: Download the Dataset
+
+Download the ```https://www.kaggle.com/datasets/viinod9/inaturalist-dataset```  and ensure it is placed at:
+
+```
+/kaggle/input/inaturalist-dataset/inaturalist_12K/train
+
+```
+
+### Step 2: Configure WandB
+Replace the following line in the notebook:
+
+wandb.login(key="YOUR_WANDB_API_KEY")
+With your actual WandB API key 
+
+### Step 3: Run the Notebook
+Open the notebook and run all cells. It will:
+Initialize a WandB sweep
+
+### Sweep Search Space
+The WandB sweep explores the following combinations:
+
+```
+
+epochs: 10, 15, 20
+
+freeze_ratio: 0.8
+
+architecture: resnet
+
+learning_rate: 0.001, 0.0001, 0.01
+
+augment: True, False
+
+```
+
+Each sweep run uses a unique combination of these to optimize validation accuracy.
+
