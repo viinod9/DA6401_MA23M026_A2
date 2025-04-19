@@ -159,6 +159,14 @@ Each sweep run uses a unique combination of these to optimize validation accurac
 
 ---
 
+## Wandb Report
+https://wandb.ai/viinod9-iitm/MA23M026_DA6401_A2/reports/MA23M026_DA6401_Assignment-2--VmlldzoxMjA5NzcwNg
+
+## Github Repo Link
+https://github.com/viinod9/DA6401_MA23M026_A2/tree/main/Part%20B
+
+---
+
 ## Notes
 
 - Assumes 10 output classes. Modify `model.fc = nn.Linear(..., 10)` if needed.
