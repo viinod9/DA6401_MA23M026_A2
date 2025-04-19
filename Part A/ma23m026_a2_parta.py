@@ -24,7 +24,7 @@ import matplotlib.pyplot as plt
 from torchvision.utils import make_grid
 
 
-wandb.login(key="YOUR_API_KEY")
+wandb.login(key="YOUR_WANDB_API_KEY")
 
 
 
