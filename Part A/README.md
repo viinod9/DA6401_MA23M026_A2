@@ -159,10 +159,10 @@ This will run 10 training jobs with different hyperparameter values and log all 
 
 
 ## Wandb Report
-https://api.wandb.ai/links/viinod9-iitm/lcx31rq7
+https://wandb.ai/cs23s024/CS6910_Assignment2/reports/CS6910-Assignment-2--Vmlldzo3NDA3NDIx
 
 ## Github Repo Link
-https://github.com/viinod9/DA6401_MA23M026_A1
+https://github.com/viinod9/DA6401_MA23M026_A2/tree/main/Part%20A
 
 
 ## Summary of Features
