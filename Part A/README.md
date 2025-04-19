@@ -3,19 +3,7 @@
 
 Hi This is my notebook where I’ve built a custom Convolutional Neural Network CNN using PyTorch. I also connected it with Weights and Biases W&B to do a Bayesian hyperparameter sweep. The whole thing is super modular and easy to experiment with.
 
-This project is mainly designed to work with the iNaturalist 12K image classification dataset, but you can use any dataset with a similar folder structure.
-
-## Dataset Format
-
-Make sure your dataset directory looks like this:
-
-```
-/inaturalist_12K/
-train/
-class1/
-class2/  
-...
-```
+This assignment is mainly designed to work with the iNaturalist 12K image classification dataset, but you can use any dataset with a similar folder structure.
 
 The model reads images from the train folder and automatically splits it into training and validation sets while maintaining class balance.
 
@@ -139,7 +127,7 @@ This is the main training script. You can train a sample CNN model using command
 4. Command-Line Usage
 
 ```
-python train.py \
+python trainA.py \
   --data_dir /path/to/inaturalist_12K
 ```
 **OR**
