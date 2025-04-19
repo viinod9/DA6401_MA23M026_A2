@@ -94,7 +94,6 @@ You just run it once, and W&B will take care of training multiple models with di
 
    ```
 
-
 2. Login to W&B once:
    
    ```
@@ -114,6 +113,7 @@ You just run it once, and W&B will take care of training multiple models with di
 │   └── ...
 
    ```
+
 4. Command-Line Usage
 
 ```
@@ -130,8 +130,6 @@ python train.py \
   --data_augmentation True \
   --epochs 10
 ```
-
-
 
 7. Run the sweep (optional):
 
