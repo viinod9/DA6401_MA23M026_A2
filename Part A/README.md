@@ -93,7 +93,7 @@ You just run it once, and W&B will take care of training multiple models with di
 MA23M026_A2_PartA.ipynb
 ```
 
-This Jupyter notebook contains the complete analysis and explanation for Assignment-2 (DA6401).
+This Jupyter notebook contains the complete analysis and explanation for Assignment-2 (DA6401) Part A.
 
 ```
 ma23m026_a2_parta.py
