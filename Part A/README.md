@@ -117,7 +117,7 @@ You just run it once, and W&B will take care of training multiple models with di
 4. Command-Line Usage
 
 ```
-python train.py \
+python trainA.py \
   --data_dir /path/to/inaturalist_12K \
   --batch_size 64 \
   --lr 0.001 \
