@@ -87,7 +87,27 @@ Here I’ve defined a Bayesian sweep config, which finds the best hyperparameter
 
 You just run it once, and W&B will take care of training multiple models with different settings and keep track of everything
 
-## How to Run (CLI)
+### 7. About Files
+
+```
+MA23M026_A2_PartA.ipynb
+```
+
+This Jupyter notebook contains the complete analysis and explanation for Assignment-2 (DA6401).
+
+```
+ma23m026_a2_parta.py
+```
+
+This Python script includes all the classes and functions related to the customized CNN architecture. You can import this file into any other script or notebook by keeping it in the same directory.
+
+```
+trainA.ipynb
+```
+
+This is the main training script. You can train a sample CNN model using command-line arguments. See the "How to Run" section below for detailed instructions.
+
+## How to Run trainA.py (CLI)
 
 1. Make sure W&B is installed:
    
@@ -117,6 +137,12 @@ You just run it once, and W&B will take care of training multiple models with di
    ```
 
 4. Command-Line Usage
+
+```
+python train.py \
+  --data_dir /path/to/inaturalist_12K
+```
+**OR**
 
 ```
 python trainA.py \
