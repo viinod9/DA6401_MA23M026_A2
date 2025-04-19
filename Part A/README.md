@@ -103,7 +103,7 @@ You just run it once, and W&B will take care of training multiple models with di
 5. Place your dataset at:
 
    ```
-   /kaggle/input/inaturalist-dataset/inaturalist_12K/train/
+   /kaggle/input/inaturalist-dataset/inaturalist_12K/
    ```
 
 7. Run the sweep:
