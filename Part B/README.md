@@ -1,6 +1,4 @@
-# ma23m026_a2_partb.ipynb
-
-## Fine-tuning pre-trained model (ResNet-50)
+# Fine-tuning pre-trained model (ResNet-50)
 
 This notebook (`ma23m026_a2_partb.ipynb`) implements a **transfer learning** pipeline for fine-tuning pretrained CNN models (ResNet50 and InceptionV3) on the iNaturalist 12K dataset. It includes:
 
