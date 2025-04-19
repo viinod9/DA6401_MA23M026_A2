@@ -1,4 +1,4 @@
-# DA6401 Assignment 2
+# Vinod Kumar (MA23M026) DA6401 Assignment-2
 
 This repository contains solutions for **Assignment 2** of **DA6401**.
 
