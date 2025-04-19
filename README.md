@@ -12,8 +12,10 @@ It is divided into two parts:
 ## Useful Links
 
 - **W&B Report**:
+  
   https://wandb.ai/viinod9-iitm/MA23M026_DA6401_A2/reports/MA23M026_DA6401_Assignment-2--VmlldzoxMjA5NzcwNg 
 - **GitHub Repo**:
+  
   https://github.com/viinod9/DA6401_MA23M026_A2
 ---
 
