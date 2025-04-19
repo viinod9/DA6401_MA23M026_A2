@@ -40,7 +40,7 @@ pip install torch torchvision scikit-learn matplotlib wandb
 
 ---
 
-### 7. About Files
+### About Files
 
 ```
 ma23m026_a2_partb.ipynb
