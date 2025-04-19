@@ -40,6 +40,31 @@ pip install torch torchvision scikit-learn matplotlib wandb
 
 ---
 
+write one section like this also
+
+
+### 7. About Files
+
+```
+ma23m026_a2_partb.ipynb
+```
+
+This Jupyter notebook contains the complete analysis and explanation for Assignment-2 (DA6401) Part B.
+
+```
+ma23m026_a2_partb.py
+```
+
+This Python script includes all the classes and functions related to the Fine-tuning pre-trained model (ResNet-50) with further hyperparameter tuning. You can import this file into any other script or notebook by keeping it in the same directory.
+
+```
+trainB.ipynb
+```
+
+This is the main training script. You can train a sample Fine-tuning pre-trained model (ResNet-50) using command-line arguments. See the "How to Run" section below for detailed instructions.
+
+---
+
 ## How to Run
 
 ### Step 1: Download the Dataset
