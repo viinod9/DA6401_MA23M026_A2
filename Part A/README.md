@@ -87,7 +87,7 @@ Here I’ve defined a Bayesian sweep config, which finds the best hyperparameter
 
 You just run it once, and W&B will take care of training multiple models with different settings and keep track of everything
 
-## How to Run
+## How to Run (CLI)
 
 1. Make sure W&B is installed:
    
@@ -133,7 +133,8 @@ python trainA.py \
   --epochs 10
 ```
 
-7. Run the sweep (optional):
+## 
+Run the sweep (optional):
 
    ```
    sweep_id = wandb.sweep(sweep_config, project='iNaturalist-CNN-PartA-BayesianSearch')  
