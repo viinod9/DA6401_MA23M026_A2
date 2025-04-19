@@ -58,7 +58,7 @@ Replace the following line in the notebook:
 wandb.login(key="YOUR_WANDB_API_KEY")
 ```
 
-With your actual WandB API key (from https://wandb.ai/authorize).
+With your actual WandB API key.
 
 ### Step 3: Run the Notebook
 
