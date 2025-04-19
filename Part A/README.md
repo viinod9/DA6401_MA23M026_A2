@@ -90,23 +90,50 @@ You just run it once, and W&B will take care of training multiple models with di
 1. Make sure W&B is installed:
    
    ```
-   pip install wandb
+   pip install torch torchvision wandb matplotlib
+
    ```
 
 
-3. Login to W&B once:
+2. Login to W&B once:
    
    ```
-   wandb login
-   ```
-
-5. Place your dataset at:
+   wandb login "YOUR_WANDB_API_KEY"
 
    ```
-   /kaggle/input/inaturalist-dataset/inaturalist_12K/
-   ```
 
-7. Run the sweep:
+3. Dataset Structure:
+
+   ```
+   inaturalist_12K/
+├── train/
+│   ├── class_1/
+│   │   ├── img1.jpg
+│   │   └── ...
+│   ├── class_2/
+│   └── ...
+
+   ```
+4. Command-Line Usage
+
+```
+python train.py \
+  --data_dir /path/to/inaturalist_12K \
+  --batch_size 64 \
+  --lr 0.001 \
+  --base_filter 32 \
+  --filter_organization double \
+  --activation_fn relu \
+  --dense_neurons 128 \
+  --dropout 0.3 \
+  --batch_norm True \
+  --data_augmentation True \
+  --epochs 10
+```
+
+
+
+7. Run the sweep (optional):
 
    ```
    sweep_id = wandb.sweep(sweep_config, project='iNaturalist-CNN-PartA-BayesianSearch')  
